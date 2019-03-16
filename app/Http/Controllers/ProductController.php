@@ -165,6 +165,16 @@ class ProductController extends Controller
 
     public function cart()
     {
-        return view('client.cart');
+        $cart = array();
+        if(session()->has('cart'))
+            $cart = session()->get('cart');
+
+        $total = 0;
+
+        foreach ($cart as $k=>$prduct) {
+                $total+=($prduct['price']*$prduct['quantity']);
+
+        }
+        return view('client.cart', compact('cart', 'total'));
     }
 }
